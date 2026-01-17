@@ -96,3 +96,36 @@ Route::post('/checkout', function () {
 Route::get('/order/{orderNumber}', function (string $orderNumber) {
     return "Order confirmed! Your order number is : {$orderNumber}";
 })->name('order.confirmation')->whereNumber('orderNumber');
+
+/*
+|--------------------------------------------------------------------------
+| Part 4: Kitchen Panel Routes (Route Group)
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('kitchen')->name('kitchen.')->group(function () {
+
+    // Dashboard - view all incoming orders
+    Route::get('dashboard', function () {
+        return 'Kitchen Dashboard';
+    })->name('dashboard');
+
+    // View Single Order
+    Route::get('/orders/{orderId}', function (string $orderId) {
+        return "Viewing order details fro order #{$orderId}";
+    })->name('order.show');
+
+    // Update Order Status
+    Route::patch('/orders/{orderId}', function (string $orderId) {
+        return "Updating status for order #{$orderId}";
+    })->name('order.update');
+
+    // Order history with optional date parameter
+    Route::get('/history/{date?}', function (?string $date = null) {
+        if ($date) {
+            return "Order history for date: {$date}";
+        }
+        return "Complete order history";
+    })->name('history');
+});
+
