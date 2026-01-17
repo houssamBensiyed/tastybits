@@ -184,3 +184,29 @@ Route::prefix('api')->name('api.')->group(function () {
     
 });
 
+/*
+|--------------------------------------------------------------------------
+| Bonus: Multiple HTTP Methods Route
+|--------------------------------------------------------------------------
+*/
+
+Route::match(['get', 'post'], '/reservation', function () {
+    if (request()->isMethod('post') {
+        return 'Processing your reservation...';
+    })
+    return 'Reservation form';
+})->name('reservation');
+
+
+/*
+|--------------------------------------------------------------------------
+| Part 6: Fallback Route
+|--------------------------------------------------------------------------
+*/
+
+Route::fallback(function () {
+    return response()->json([
+        'error' => true,
+        'message' => 'Route not found'
+    ], 404);
+});
