@@ -54,3 +54,45 @@ Route::get('/menu/{category}', function (string $category) {
 Route::get('/menu/{category}/{item}', function (string $category, string $item) {
     return "Displaying {$item} from {$category} category";
 })->name('menu.item');
+
+
+/*
+|--------------------------------------------------------------------------
+| Part 3: Order Routes
+|--------------------------------------------------------------------------
+*/
+
+// View Cart
+Route::get('/cart', function () {
+    return 'Your shopping cart';
+})->name('cart.index');
+
+// Add item to cart
+Route::post('/cart/{itemId}', function (string $itemId) {
+    return "Adding item {$itemId} to cart";
+})->name('cart.add');
+
+// Update cart item quantity
+Route::patch('/cart/{cartItemId}', function (string $cartItemId) {
+    return "Updating quantity for cart Item {$cartItemId}";
+})->name('cart.update');
+
+// Remove item from cart
+Route::delete('/cart/{cartItemId}', function (string $cartItemId) {
+    return "Removing cart item {$cartItemId}";
+})->name('cart.remove');
+
+// Checkout page
+Route::get('/checkout', function () {
+    return 'Checkout page';
+})->name('checkout.index');
+
+// Place order
+Route::post('/checkout', function () {
+    return 'Proccessing you order...';
+})->name('checkout.place');
+
+// Order confirmation
+Route::get('/order/{orderNumber}', function (string $orderNumber) {
+    return "Order confirmed! Your order number is : {$orderNumber}";
+})->name('order.confirmation')->whereNumber('orderNumber');
