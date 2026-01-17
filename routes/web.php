@@ -129,3 +129,58 @@ Route::prefix('kitchen')->name('kitchen.')->group(function () {
     })->name('history');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Part 5: API Routes Group
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('api')->name('api.')->group(function () {
+    
+    // API Version 1
+    Route::prefix('v1')->name('v1.')->group(function () {
+        
+        // Get all menu items
+        Route::get('/menu', function () {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    ['id' => 1, 'name' => 'Margherita Pizza', 'price' => 12.99],
+                    ['id' => 2, 'name' => 'Cheeseburger', 'price' => 8.99],
+                    ['id' => 3, 'name' => 'Cola', 'price' => 2.49],
+                ]
+            ]);
+        })->name('menu.index');
+        
+        // Get single menu item
+        Route::get('/menu/{itemId}', function (string $itemId) {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'id' => $itemId,
+                    'name' => 'Margherita Pizza',
+                    'price' => 12.99,
+                    'description' => 'Classic Italian pizza'
+                ]
+            ]);
+        })->name('menu.show');
+        
+        // Get restaurant status
+        Route::get('/status', function () {
+            $hour = date('H');
+            $isOpen = ($hour >= 10 && $hour < 22);
+            
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'is_open' => $isOpen,
+                    'message' => $isOpen ? 'We are open!' : 'Sorry, we are closed',
+                    'hours' => '10:00 AM - 10:00 PM'
+                ]
+            ]);
+        })->name('status');
+        
+    });
+    
+});
+
